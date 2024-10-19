@@ -24,7 +24,7 @@ namespace ApiCatalogo.Controllers
         public ActionResult<IEnumerable<Produto>> Get()
         {
 
-            var produtos = _context.Produtos.ToList();
+            var produtos = _context.Produtos.AsNoTracking().Take(10).ToList();
 
             if (produtos is null) return NotFound("Sem produtos");
 
@@ -77,6 +77,7 @@ namespace ApiCatalogo.Controllers
         {
 
             var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
+            // outra forna pra apagar se estivesse salvo namemoria
             //    var produto = _context.Produtos.Find(id);
 
             if (produto is null)
