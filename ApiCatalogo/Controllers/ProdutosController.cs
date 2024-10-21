@@ -30,7 +30,7 @@ namespace ApiCatalogo.Controllers
 
             return produtos;
         }
-        [HttpGet("{id:int}", Name = "ObeterProduto")]
+        [HttpGet("{id:int:min(1)}", Name = "ObeterProduto")]
         public ActionResult<Produto> Get(int id)
         {
 
