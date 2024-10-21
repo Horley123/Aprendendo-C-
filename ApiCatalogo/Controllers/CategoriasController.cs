@@ -26,7 +26,17 @@ namespace ApiCatalogo.Controllers
         public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
         {
 
-            return _context.Categorias.Include(p => p.Produtos).ToList();
+            try
+            {
+                throw new Exception();
+                return _context.Categorias.Include(p => p.Produtos).ToList();
+            }
+            catch (System.Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Broxei");
+            }
+
 
         }
 

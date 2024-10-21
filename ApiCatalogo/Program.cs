@@ -17,11 +17,18 @@ builder.Services.AddSwaggerGen();
 
 string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 
+
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
 
 var app = builder.Build();
 
+
+if (!app.Environment.IsProduction())
+{
+    app.UseExceptionHandler("/Error");
+}
 
 
 
