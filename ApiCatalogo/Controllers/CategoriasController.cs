@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApiCatalogo.Context;
 using ApiCatalogo.Models;
+using ApiCatalogo.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace ApiCatalogo.Controllers
 {
@@ -15,12 +17,28 @@ namespace ApiCatalogo.Controllers
     {
 
         private readonly AppDbContext _context;
+        private readonly IMeuServico _meuServico;
 
-
-        public CategoriasController(AppDbContext context)
+        public CategoriasController(AppDbContext context, IMeuServico meuServico)
         {
             _context = context;
+            _meuServico = meuServico;
         }
+
+        [HttpGet("UsandoFromServicies/{nome}")]
+
+        public ActionResult<string> GetSaudacaoFromServicies([FromServices] IMeuServico meuServico , string nome)
+        {
+            return meuServico.Saudacao(nome);
+        }
+
+        [HttpGet("SemUsarFromServicies/{nome}")]
+
+        public ActionResult<string> GetSaudacaoSemFromServicies( IMeuServico meuServico, string nome)
+        {
+            return meuServico.Saudacao(nome);
+        }
+
 
         [HttpGet("produtos")]
         public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()

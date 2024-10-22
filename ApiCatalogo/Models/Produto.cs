@@ -14,8 +14,8 @@ namespace ApiCatalogo.Models
         [Key]
         public int ProdutoId { get; set; }
 
-        [Required]
-        [StringLength(80)]
+        [Required( ErrorMessage=" o nome é obriagtorio")]
+        [StringLength(80, ErrorMessage ="Nome deve ter entre 5  20")]
         public string? Nome { get; set; }
 
         [Required]
@@ -24,6 +24,7 @@ namespace ApiCatalogo.Models
 
         [Required]
         [Column(TypeName = "decimal(10,2)")]
+        [Range(1,1000, ErrorMessage = " o repco deve estar entre {1} e {2}")]
         public decimal Preco { get; set; }
 
         [Required]

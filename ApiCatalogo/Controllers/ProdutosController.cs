@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ApiCatalogo.Context;
 using ApiCatalogo.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiCatalogo.Controllers
@@ -20,21 +21,26 @@ namespace ApiCatalogo.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<Produto>> Get()
+        [HttpGet]  
+        public async Task<ActionResult<IEnumerable<Produto>>> Get()
         {
 
-            var produtos = _context.Produtos.AsNoTracking().Take(10).ToList();
+            var produtos = await _context.Produtos.AsNoTracking().Take(10).ToListAsync();
 
             if (produtos is null) return NotFound("Sem produtos");
 
             return produtos;
         }
+
+
         [HttpGet("{id:int:min(1)}", Name = "ObeterProduto")]
-        public ActionResult<Produto> Get(int id)
+
+
+        public async Task<ActionResult<Produto>> Get([FromQuery] int id)
         {
 
-            var produtos = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
+           
+            var produtos = await  _context.Produtos.FirstOrDefaultAsync(p => p.ProdutoId == id);
 
             if (produtos is null) return NotFound("Sem produtos");
 
