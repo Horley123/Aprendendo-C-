@@ -1,32 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\trix\\Desktop\\MinhaApi\\Aprendendo-C-\\ApiCatalogo\\ApiCatalogo.csproj": {}
+    "/Users/horleyleitaomonteiro/Desktop/C#/ApiCatalogo/ApiCatalogo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\trix\\Desktop\\MinhaApi\\Aprendendo-C-\\ApiCatalogo\\ApiCatalogo.csproj": {
+    "/Users/horleyleitaomonteiro/Desktop/C#/ApiCatalogo/ApiCatalogo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\trix\\Desktop\\MinhaApi\\Aprendendo-C-\\ApiCatalogo\\ApiCatalogo.csproj",
+        "projectUniqueName": "/Users/horleyleitaomonteiro/Desktop/C#/ApiCatalogo/ApiCatalogo.csproj",
         "projectName": "ApiCatalogo",
-        "projectPath": "C:\\Users\\trix\\Desktop\\MinhaApi\\Aprendendo-C-\\ApiCatalogo\\ApiCatalogo.csproj",
-        "packagesPath": "C:\\Users\\trix\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\trix\\Desktop\\MinhaApi\\Aprendendo-C-\\ApiCatalogo\\obj\\",
+        "projectPath": "/Users/horleyleitaomonteiro/Desktop/C#/ApiCatalogo/ApiCatalogo.csproj",
+        "packagesPath": "/Users/horleyleitaomonteiro/.nuget/packages/",
+        "outputPath": "/Users/horleyleitaomonteiro/Desktop/C#/ApiCatalogo/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\trix\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/horleyleitaomonteiro/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -84,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -18,23 +18,29 @@ namespace ApiCatalogo.Controllers
 
         private readonly AppDbContext _context;
         private readonly IMeuServico _meuServico;
+        private readonly IConfiguration _configuration;
 
-        public CategoriasController(AppDbContext context, IMeuServico meuServico)
+        public CategoriasController(
+            AppDbContext context,
+            IMeuServico meuServico,
+            IConfiguration configuration
+        )
         {
             _context = context;
             _meuServico = meuServico;
+            _configuration = configuration;
         }
 
         [HttpGet("UsandoFromServicies/{nome}")]
 
-        public ActionResult<string> GetSaudacaoFromServicies([FromServices] IMeuServico meuServico , string nome)
+        public ActionResult<string> GetSaudacaoFromServicies([FromServices] IMeuServico meuServico, string nome)
         {
             return meuServico.Saudacao(nome);
         }
 
         [HttpGet("SemUsarFromServicies/{nome}")]
 
-        public ActionResult<string> GetSaudacaoSemFromServicies( IMeuServico meuServico, string nome)
+        public ActionResult<string> GetSaudacaoSemFromServicies(IMeuServico meuServico, string nome)
         {
             return meuServico.Saudacao(nome);
         }
@@ -73,6 +79,7 @@ namespace ApiCatalogo.Controllers
         public ActionResult<Categoria> Get(int id)
         {
 
+            throw new Exception("testando mmeus ovos");
             var categorias = _context.Categorias.FirstOrDefault(p => p.CategoriaId == id);
 
             if (categorias is null) return NotFound("Sem categorias");
@@ -133,5 +140,19 @@ namespace ApiCatalogo.Controllers
             return Ok(categoria);
         }
 
+
+
+
+        [HttpGet("LerArquivoConfiguracao")]
+
+        public string GetValores()
+        {
+            var valor1 = _configuration["chave1"];
+            var valor2 = _configuration["chave2"];
+            var secao1 = _configuration["secao1:chave2"];
+
+
+            return $"Chave1 = {valor1} \n Chave2 = {valor2} \n secao1 = {secao1}";
+        }
     }
 }
