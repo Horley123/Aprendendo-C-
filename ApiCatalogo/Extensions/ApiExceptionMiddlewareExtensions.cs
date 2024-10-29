@@ -27,10 +27,6 @@ namespace ApiCatalogo.Extensions
                         }.ToString());
                     }
                 });
-
-
-
-
             });
         }
     }

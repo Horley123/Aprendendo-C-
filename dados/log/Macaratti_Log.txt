@@ -1,0 +1,65 @@
+Information: 14 - Now listening on: http://localhost:5035
+Information: 0 - Application started. Press Ctrl+C to shut down.
+Information: 0 - Hosting environment: Development
+Information: 0 - Content root path: /Users/horleyleitaomonteiro/Desktop/C#/ApiCatalogo
+Warning: 3 - Failed to determine the https port for redirect.
+Information: 0 -  =========GET api/categorias/id = 12  ============
+Information: 20101 - Executed DbCommand (45ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT `c`.`CategoriaId`, `c`.`ImageUrl`, `c`.`Nome`
+FROM `Categorias` AS `c`
+WHERE `c`.`CategoriaId` = @__id_0
+LIMIT 1
+Information: 0 -  =========GET api/categorias/id = 12  NOT FOUND ============
+Information: 0 - Application is shutting down...
+Information: 14 - Now listening on: http://localhost:5035
+Information: 0 - Application started. Press Ctrl+C to shut down.
+Information: 0 - Hosting environment: Development
+Information: 0 - Content root path: /Users/horleyleitaomonteiro/Desktop/C#/ApiCatalogo
+Warning: 3 - Failed to determine the https port for redirect.
+Error: 0 - Ocorreu uma exececao nao tratada.
+Information: 14 - Now listening on: http://localhost:5035
+Information: 0 - Application started. Press Ctrl+C to shut down.
+Information: 0 - Hosting environment: Development
+Information: 0 - Content root path: /Users/horleyleitaomonteiro/Desktop/C#/ApiCatalogo
+Warning: 3 - Failed to determine the https port for redirect.
+Information: 0 - ### Executando -> OnActionExecuted
+Information: 0 - ##############################
+Information: 0 - ### terça-feira, 29 de outubro de 2024
+Information: 0 - ### Model State: 200
+Information: 0 - ##############################
+Information: 20101 - Executed DbCommand (23ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT `c`.`CategoriaId`, `c`.`ImageUrl`, `c`.`Nome`
+FROM `Categorias` AS `c`
+Information: 0 - ### Executando -> OnActionExecuting
+Information: 0 - ##############################
+Information: 0 - ### terça-feira, 29 de outubro de 2024
+Information: 0 - ### Model State: True
+Information: 0 - ##############################
+Information: 20101 - Executed DbCommand (30ms) [Parameters=[@p0='?' (Size = 300), @p1='?' (Size = 80)], CommandType='Text', CommandTimeout='30']
+INSERT INTO `Categorias` (`ImageUrl`, `Nome`)
+VALUES (@p0, @p1);
+SELECT `CategoriaId`
+FROM `Categorias`
+WHERE ROW_COUNT() = 1 AND `CategoriaId` = LAST_INSERT_ID();
+Information: 0 - Application is shutting down...
+Information: 14 - Now listening on: http://localhost:5035
+Information: 0 - Application started. Press Ctrl+C to shut down.
+Information: 0 - Hosting environment: Development
+Information: 0 - Content root path: /Users/horleyleitaomonteiro/Desktop/C#/ApiCatalogo
+Warning: 3 - Failed to determine the https port for redirect.
+Information: 0 -  =========GET api/categorias/id = 5  ============
+Information: 20101 - Executed DbCommand (24ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT `c`.`CategoriaId`, `c`.`ImageUrl`, `c`.`Nome`
+FROM `Categorias` AS `c`
+WHERE `c`.`CategoriaId` = @__id_0
+LIMIT 1
+Information: 0 -  =========GET api/categorias/id = 5  NOT FOUND ============
+Information: 0 - Application is shutting down...
+Information: 14 - Now listening on: http://localhost:5035
+Information: 0 - Application started. Press Ctrl+C to shut down.
+Information: 0 - Hosting environment: Development
+Information: 0 - Content root path: /Users/horleyleitaomonteiro/Desktop/C#/ApiCatalogo
+Warning: 3 - Failed to determine the https port for redirect.
+Information: 20101 - Executed DbCommand (12ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT `p`.`ProdutoId`, `p`.`CategoriaId`, `p`.`DataCadastro`, `p`.`Descricao`, `p`.`Estoque`, `p`.`ImageUrl`, `p`.`Nome`, `p`.`Preco`
+FROM `Produtos` AS `p`
