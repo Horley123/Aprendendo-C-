@@ -1,0 +1,32 @@
+# Arquivos do Build
+bin/
+obj/
+
+# Logs
+*.log
+
+# Configurações de Ambiente e Configuração de Usuário
+*.vs/
+.vscode/
+.idea/
+
+# Arquivos de Pacotes e Cache do NuGet
+packages/
+*.nupkg
+*.snupkg
+*.nuspec
+
+# Configurações Locais
+.env
+appsettings.*.json
+
+# Arquivos Gerados pelo Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Outras Extensões e Pastas
+*.suo
+*.user
+*.rsuser
+*.userosscache
+*.sln.docstates
