@@ -27,21 +27,21 @@ namespace ApiCatalogo.Controllers
 
 
         [HttpGet("{id:int:min(1)}", Name = "ObeterProduto")]
-
-
         public ActionResult<Produto> Get([FromQuery] int id)
         {
 
 
             var produtos = _repository.GetProduto(id);
-
+            if (produtos is null)
+            {
+                return NotFound();
+            }
 
 
             return Ok(produtos);
         }
 
         [HttpPost()]
-
         public ActionResult Post(Produto produto)
         {
 
@@ -49,6 +49,7 @@ namespace ApiCatalogo.Controllers
             {
                 return BadRequest();
             }
+
             var produtoCriado = _repository.Create(produto);
 
 
@@ -66,9 +67,16 @@ namespace ApiCatalogo.Controllers
 
             var produtoAtualizado = _repository.Update(produto);
 
+            if (produtoAtualizado)
+            {
 
+                return Ok(produtoAtualizado);
+            }
+            else
+            {
+                return StatusCode(500, $"Falha ao atualizar o produto de id = {id}");
+            }
 
-            return Ok(produtoAtualizado);
         }
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id)

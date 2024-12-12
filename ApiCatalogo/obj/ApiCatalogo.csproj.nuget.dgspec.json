@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/horleyleitaomonteiro/Desktop/C#/ApiCatalogo/ApiCatalogo.csproj": {}
+    "/Users/horleyleitaomonteiro/projetos/Person/C#/ApiCatalogo/ApiCatalogo.csproj": {}
   },
   "projects": {
-    "/Users/horleyleitaomonteiro/Desktop/C#/ApiCatalogo/ApiCatalogo.csproj": {
+    "/Users/horleyleitaomonteiro/projetos/Person/C#/ApiCatalogo/ApiCatalogo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/horleyleitaomonteiro/Desktop/C#/ApiCatalogo/ApiCatalogo.csproj",
+        "projectUniqueName": "/Users/horleyleitaomonteiro/projetos/Person/C#/ApiCatalogo/ApiCatalogo.csproj",
         "projectName": "ApiCatalogo",
-        "projectPath": "/Users/horleyleitaomonteiro/Desktop/C#/ApiCatalogo/ApiCatalogo.csproj",
+        "projectPath": "/Users/horleyleitaomonteiro/projetos/Person/C#/ApiCatalogo/ApiCatalogo.csproj",
         "packagesPath": "/Users/horleyleitaomonteiro/.nuget/packages/",
-        "outputPath": "/Users/horleyleitaomonteiro/Desktop/C#/ApiCatalogo/obj/",
+        "outputPath": "/Users/horleyleitaomonteiro/projetos/Person/C#/ApiCatalogo/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/horleyleitaomonteiro/.nuget/NuGet/NuGet.Config"
