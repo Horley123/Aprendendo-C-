@@ -57,6 +57,8 @@ namespace ApiCatalogo.Repositories
 
         public bool Delete(int id)
         {
+
+
             var produto = _context.Produtos.Find(id);
 
 

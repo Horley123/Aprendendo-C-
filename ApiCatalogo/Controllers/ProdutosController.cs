@@ -86,8 +86,17 @@ namespace ApiCatalogo.Controllers
 
             var produtoExcluido = _repository.Delete(id);
 
+            if (produtoExcluido)
+            {
 
-            return Ok(produtoExcluido);
+                return Ok(produtoExcluido);
+            }
+            else
+            {
+
+                return StatusCode(500, $"Falha ao excluir o produto de id = {id}");
+            }
+
         }
     }
 }
