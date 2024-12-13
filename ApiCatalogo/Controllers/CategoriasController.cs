@@ -14,23 +14,20 @@ namespace ApiCatalogo.Controllers
     public class CategoriasController : ControllerBase
     {
 
-        private readonly IRepository<Categoria> _repository;
-
+        private readonly IUnitOfWork _ofw;
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
 
 
         public CategoriasController(
-            ICategoriaRepository repository,
-            IMeuServico meuServico,
+            IUnitOfWork ofw,
             IConfiguration configuration,
             ILogger<CategoriasController> logger
         )
         {
-            _repository = repository;
-
 
             _configuration = configuration;
+            _ofw = ofw;
             _logger = logger;
         }
 
@@ -53,7 +50,7 @@ namespace ApiCatalogo.Controllers
         public ActionResult<IEnumerable<Categoria>> Get()
         {
 
-            var categorias = _repository.GetAll();
+            var categorias = _ofw.GategoriaRepository.GetAll();
 
 
             return Ok(categorias);
@@ -65,7 +62,7 @@ namespace ApiCatalogo.Controllers
 
 
             _logger.LogInformation($" =========GET api/categorias/id = {id}  ============");
-            var categorias = _repository.Get(c => c.CategoriaId == id);
+            var categorias = _ofw.GategoriaRepository.Get(c => c.CategoriaId == id);
 
             if (categorias is null) { _logger.LogInformation($" =========GET api/categorias/id = {id}  NOT FOUND ============"); return NotFound("Sem categorias"); }
 
@@ -81,8 +78,8 @@ namespace ApiCatalogo.Controllers
             {
                 return BadRequest();
             }
-            var categoriaCriada = _repository.Create(categoria);
-
+            var categoriaCriada = _ofw.GategoriaRepository.Create(categoria);
+            _ofw.Commit();
             return new CreatedAtRouteResult("ObeterCategoria",
                     new { id = categoriaCriada.CategoriaId }, categoriaCriada);
         }
@@ -96,7 +93,8 @@ namespace ApiCatalogo.Controllers
                 return BadRequest();
             }
 
-            var categoriaNova = _repository.Update(categoria);
+            var categoriaNova = _ofw.GategoriaRepository.Update(categoria);
+            _ofw.Commit();
 
             return Ok(categoriaNova);
         }
@@ -104,9 +102,9 @@ namespace ApiCatalogo.Controllers
         public ActionResult Delete(int id)
         {
 
-            var categoria = _repository.Get(c => c.CategoriaId == id);
-            var categoriaExcluida = _repository.Delete(categoria);
-
+            var categoria = _ofw.GategoriaRepository.Get(c => c.CategoriaId == id);
+            var categoriaExcluida = _ofw.GategoriaRepository.Delete(categoria);
+            _ofw.Commit();
             return Ok(categoriaExcluida);
         }
 

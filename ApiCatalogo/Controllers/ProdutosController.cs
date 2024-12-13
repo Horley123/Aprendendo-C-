@@ -10,20 +10,20 @@ namespace ApiCatalogo.Controllers
     [Route("[controller]")]
     public class ProdutosController : ControllerBase
     {
-        private readonly IProdutoRepository _produtoRepository;
+        private readonly IUnitOfWork _uof;
 
 
-        public ProdutosController(IProdutoRepository produtoRepository)
+        public ProdutosController(IUnitOfWork uof)
         {
 
-            _produtoRepository = produtoRepository;
+            _uof = uof;
         }
 
         [HttpGet("protudos/{id}")]
         public ActionResult<IEnumerable<Produto>> GetProdutosPorCategoria(int id)
         {
 
-            var produtos = _produtoRepository.GetProdutosPorCategoria(id);
+            var produtos = _uof.ProdutoRepository.GetProdutosPorCategoria(id);
 
             if (produtos is null)
             {
@@ -35,7 +35,7 @@ namespace ApiCatalogo.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> Get()
         {
-            var produtos = _produtoRepository.GetAll();
+            var produtos = _uof.ProdutoRepository.GetAll();
 
             return Ok(produtos);
         }
@@ -46,7 +46,7 @@ namespace ApiCatalogo.Controllers
         {
 
 
-            var produtos = _produtoRepository.Get(p => p.ProdutoId == id);
+            var produtos = _uof.ProdutoRepository.Get(p => p.ProdutoId == id);
             if (produtos is null)
             {
                 return NotFound();
@@ -65,8 +65,8 @@ namespace ApiCatalogo.Controllers
                 return BadRequest();
             }
 
-            var produtoCriado = _produtoRepository.Create(produto);
-
+            var produtoCriado = _uof.ProdutoRepository.Create(produto);
+            _uof.Commit();
 
             return new CreatedAtRouteResult("ObeterProduto", new { id = produtoCriado.ProdutoId }, produtoCriado);
         }
@@ -80,9 +80,9 @@ namespace ApiCatalogo.Controllers
                 return BadRequest();
             }
 
-            var produtoAtualizado = _produtoRepository.Update(produto);
+            var produtoAtualizado = _uof.ProdutoRepository.Update(produto);
 
-
+            _uof.Commit();
 
             return Ok(produtoAtualizado);
 
@@ -93,7 +93,7 @@ namespace ApiCatalogo.Controllers
         {
 
 
-            var produto = _produtoRepository.Get(p => p.ProdutoId == id);
+            var produto = _uof.ProdutoRepository.Get(p => p.ProdutoId == id);
 
             if (produto is null)
             {
@@ -101,8 +101,8 @@ namespace ApiCatalogo.Controllers
                 return NotFound("Produto nao encontrado");
             }
 
-            var produtoExcluido = _produtoRepository.Delete(produto);
-
+            var produtoExcluido = _uof.ProdutoRepository.Delete(produto);
+            _uof.Commit();
             return Ok(produtoExcluido);
 
         }
