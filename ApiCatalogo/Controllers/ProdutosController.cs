@@ -10,19 +10,34 @@ namespace ApiCatalogo.Controllers
     [Route("[controller]")]
     public class ProdutosController : ControllerBase
     {
-        private readonly IProdutoRepository _repository;
+        private readonly IProdutoRepository _produtoRepository;
 
-        public ProdutosController(IProdutoRepository repository)
+
+        public ProdutosController(IProdutoRepository produtoRepository)
         {
-            _repository = repository;
+
+            _produtoRepository = produtoRepository;
         }
 
+        [HttpGet("protudos/{id}")]
+        public ActionResult<IEnumerable<Produto>> GetProdutosPorCategoria(int id)
+        {
+
+            var produtos = _produtoRepository.GetProdutosPorCategoria(id);
+
+            if (produtos is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(produtos);
+        }
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> Get()
         {
-            var categorias = _repository.GetProdutos();
+            var produtos = _produtoRepository.GetAll();
 
-            return Ok(categorias);
+            return Ok(produtos);
         }
 
 
@@ -31,7 +46,7 @@ namespace ApiCatalogo.Controllers
         {
 
 
-            var produtos = _repository.GetProduto(id);
+            var produtos = _produtoRepository.Get(p => p.ProdutoId == id);
             if (produtos is null)
             {
                 return NotFound();
@@ -50,7 +65,7 @@ namespace ApiCatalogo.Controllers
                 return BadRequest();
             }
 
-            var produtoCriado = _repository.Create(produto);
+            var produtoCriado = _produtoRepository.Create(produto);
 
 
             return new CreatedAtRouteResult("ObeterProduto", new { id = produtoCriado.ProdutoId }, produtoCriado);
@@ -65,17 +80,12 @@ namespace ApiCatalogo.Controllers
                 return BadRequest();
             }
 
-            var produtoAtualizado = _repository.Update(produto);
+            var produtoAtualizado = _produtoRepository.Update(produto);
 
-            if (produtoAtualizado)
-            {
 
-                return Ok(produtoAtualizado);
-            }
-            else
-            {
-                return StatusCode(500, $"Falha ao atualizar o produto de id = {id}");
-            }
+
+            return Ok(produtoAtualizado);
+
 
         }
         [HttpDelete("{id:int}")]
@@ -83,19 +93,17 @@ namespace ApiCatalogo.Controllers
         {
 
 
+            var produto = _produtoRepository.Get(p => p.ProdutoId == id);
 
-            var produtoExcluido = _repository.Delete(id);
-
-            if (produtoExcluido)
+            if (produto is null)
             {
 
-                return Ok(produtoExcluido);
+                return NotFound("Produto nao encontrado");
             }
-            else
-            {
 
-                return StatusCode(500, $"Falha ao excluir o produto de id = {id}");
-            }
+            var produtoExcluido = _produtoRepository.Delete(produto);
+
+            return Ok(produtoExcluido);
 
         }
     }

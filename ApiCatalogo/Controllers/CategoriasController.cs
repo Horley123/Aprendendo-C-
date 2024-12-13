@@ -1,10 +1,10 @@
 
-using ApiCatalogo.Context;
+
 using ApiCatalogo.Models;
 using ApiCatalogo.Repositories;
 using ApiCatalogo.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 
 
 namespace ApiCatalogo.Controllers
@@ -14,8 +14,8 @@ namespace ApiCatalogo.Controllers
     public class CategoriasController : ControllerBase
     {
 
-        private readonly ICategoriaRepository _repository;
-        private readonly IMeuServico _meuServico;
+        private readonly IRepository<Categoria> _repository;
+
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
 
@@ -29,7 +29,7 @@ namespace ApiCatalogo.Controllers
         {
             _repository = repository;
 
-            _meuServico = meuServico;
+
             _configuration = configuration;
             _logger = logger;
         }
@@ -48,24 +48,12 @@ namespace ApiCatalogo.Controllers
             return meuServico.Saudacao(nome);
         }
 
-
-        // [HttpGet("produtos")]
-        // public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
-        // {
-
-
-        //     _logger.LogInformation(" =========GET api/categorias/produtos  ============");
-        //     return _context.Categorias.Include(p => p.Produtos).ToList();
-
-
-        // }
-
         [HttpGet]
         [ServiceFilter(typeof(ApiLoggingFilter))]
         public ActionResult<IEnumerable<Categoria>> Get()
         {
 
-            var categorias = _repository.GetCategorias();
+            var categorias = _repository.GetAll();
 
 
             return Ok(categorias);
@@ -77,7 +65,7 @@ namespace ApiCatalogo.Controllers
 
 
             _logger.LogInformation($" =========GET api/categorias/id = {id}  ============");
-            var categorias = _repository.GetCategoria(id);
+            var categorias = _repository.Get(c => c.CategoriaId == id);
 
             if (categorias is null) { _logger.LogInformation($" =========GET api/categorias/id = {id}  NOT FOUND ============"); return NotFound("Sem categorias"); }
 
@@ -116,7 +104,8 @@ namespace ApiCatalogo.Controllers
         public ActionResult Delete(int id)
         {
 
-            var categoriaExcluida = _repository.Delete(id);
+            var categoria = _repository.Get(c => c.CategoriaId == id);
+            var categoriaExcluida = _repository.Delete(categoria);
 
             return Ok(categoriaExcluida);
         }
