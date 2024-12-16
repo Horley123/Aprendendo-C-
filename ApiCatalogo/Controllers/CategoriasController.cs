@@ -1,8 +1,10 @@
 
 
+using ApiCatalogo.DTOs;
+using ApiCatalogo.DTOs.Mappings.Extensions;
 using ApiCatalogo.Models;
 using ApiCatalogo.Repositories;
-using ApiCatalogo.Services;
+
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -15,45 +17,35 @@ namespace ApiCatalogo.Controllers
     {
 
         private readonly IUnitOfWork _ofw;
-        private readonly IConfiguration _configuration;
+
         private readonly ILogger _logger;
 
 
         public CategoriasController(
             IUnitOfWork ofw,
-            IConfiguration configuration,
+
             ILogger<CategoriasController> logger
         )
         {
 
-            _configuration = configuration;
+
             _ofw = ofw;
             _logger = logger;
         }
 
-        [HttpGet("UsandoFromServicies/{nome}")]
 
-        public ActionResult<string> GetSaudacaoFromServicies([FromServices] IMeuServico meuServico, string nome)
-        {
-            return meuServico.Saudacao(nome);
-        }
-
-        [HttpGet("SemUsarFromServicies/{nome}")]
-
-        public ActionResult<string> GetSaudacaoSemFromServicies(IMeuServico meuServico, string nome)
-        {
-            return meuServico.Saudacao(nome);
-        }
 
         [HttpGet]
         [ServiceFilter(typeof(ApiLoggingFilter))]
         public ActionResult<IEnumerable<Categoria>> Get()
         {
 
+
             var categorias = _ofw.GategoriaRepository.GetAll();
 
+            var categoriasDto = categorias.ToCategoriaDTOList();
 
-            return Ok(categorias);
+            return Ok(categoriasDto);
         }
 
         [HttpGet("{id:int}", Name = "ObeterCategoria")]
@@ -66,37 +58,49 @@ namespace ApiCatalogo.Controllers
 
             if (categorias is null) { _logger.LogInformation($" =========GET api/categorias/id = {id}  NOT FOUND ============"); return NotFound("Sem categorias"); }
 
-            return Ok(categorias);
+            var categoriasDto = categorias.ToCategoriaDTO();
+
+            return Ok(categoriasDto);
         }
 
         [HttpPost()]
-
-        public ActionResult Post(Categoria categoria)
+        public ActionResult<CategoriaDTO> Post(CategoriaDTO categoriaDto)
         {
 
-            if (categoria is null)
+            if (categoriaDto is null)
             {
                 return BadRequest();
             }
+
+            var categoria = categoriaDto.ToCategoria();
+
             var categoriaCriada = _ofw.GategoriaRepository.Create(categoria);
             _ofw.Commit();
+
+
+            var categoriaDtocreate = categoriaCriada.ToCategoriaDTO();
+
             return new CreatedAtRouteResult("ObeterCategoria",
-                    new { id = categoriaCriada.CategoriaId }, categoriaCriada);
+                    new { id = categoriaDtocreate.CategoriaId }, categoriaDtocreate);
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult Put(int id, Categoria categoria)
+        public ActionResult<CategoriaDTO> Put(int id, CategoriaDTO categoriaDto)
         {
 
-            if (id != categoria.CategoriaId)
+            if (id != categoriaDto.CategoriaId)
             {
                 return BadRequest();
             }
+
+            var categoria = categoriaDto.ToCategoria();
 
             var categoriaNova = _ofw.GategoriaRepository.Update(categoria);
             _ofw.Commit();
 
-            return Ok(categoriaNova);
+            var categoriaDtoAtualizada = categoriaNova.ToCategoriaDTO();
+
+            return Ok(categoriaDtoAtualizada);
         }
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id)
@@ -105,22 +109,14 @@ namespace ApiCatalogo.Controllers
             var categoria = _ofw.GategoriaRepository.Get(c => c.CategoriaId == id);
             var categoriaExcluida = _ofw.GategoriaRepository.Delete(categoria);
             _ofw.Commit();
+
+            var categoriaExcluidaDTO = categoriaExcluida.ToCategoriaDTO();
             return Ok(categoriaExcluida);
         }
 
 
 
 
-        [HttpGet("LerArquivoConfiguracao")]
 
-        public string GetValores()
-        {
-            var valor1 = _configuration["chave1"];
-            var valor2 = _configuration["chave2"];
-            var secao1 = _configuration["secao1:chave2"];
-
-
-            return $"Chave1 = {valor1} \n Chave2 = {valor2} \n secao1 = {secao1}";
-        }
     }
 }

@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using ApiCatalogo;
 using ApiCatalogo.Context;
+using ApiCatalogo.DTOs.Mappings;
 using ApiCatalogo.Extensions;
 using ApiCatalogo.Filters;
 using ApiCatalogo.Logging;
@@ -26,6 +27,7 @@ builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUnitOfWork, UniOfWork>();
+builder.Services.AddAutoMapper(typeof(ProdutoDTOMappingProfile));
 
 
 

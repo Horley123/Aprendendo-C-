@@ -24,7 +24,7 @@ namespace ApiCatalogo.Repositories
             }
         }
 
-        public ICategoriaRepository CategoriaRepository
+        public ICategoriaRepository GategoriaRepository
         {
             get
             {
@@ -32,7 +32,7 @@ namespace ApiCatalogo.Repositories
             }
         }
 
-        public ICategoriaRepository GategoriaRepository => throw new NotImplementedException();
+
 
         public void Commit()
         {
