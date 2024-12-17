@@ -1,6 +1,7 @@
 
 using ApiCatalogo.Context;
 using ApiCatalogo.Models;
+using ApiCatalogo.Pagination;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiCatalogo.Repositories
@@ -13,8 +14,13 @@ namespace ApiCatalogo.Repositories
             _context = context;
         }
 
+        public PagedList<Categoria> GetCategorias(CategoriasParemeters produtosParameters)
+        {
+            var categorias = GetAll().OrderBy(p => p.Nome)
+            .AsQueryable();
 
-
-
+            var categoriasOrdenados = PagedList<Categoria>.ToPageList(categorias, produtosParameters.PageNumber, produtosParameters.PageSize);
+            return categoriasOrdenados;
+        }
     }
 }

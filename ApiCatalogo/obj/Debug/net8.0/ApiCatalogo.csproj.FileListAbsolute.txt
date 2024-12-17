@@ -315,3 +315,7 @@ C:/Users/trix/Desktop/MinhaApi/Aprendendo-C-/ApiCatalogo/obj/Debug/net8.0/ref/Ap
 /Users/horleyleitaomonteiro/projetos/Person/C#/ApiCatalogo/obj/Debug/net8.0/ApiCatalogo.pdb
 /Users/horleyleitaomonteiro/projetos/Person/C#/ApiCatalogo/obj/Debug/net8.0/ApiCatalogo.genruntimeconfig.cache
 /Users/horleyleitaomonteiro/projetos/Person/C#/ApiCatalogo/obj/Debug/net8.0/ref/ApiCatalogo.dll
+/Users/horleyleitaomonteiro/projetos/Person/C#/ApiCatalogo/bin/Debug/net8.0/Microsoft.AspNetCore.JsonPatch.dll
+/Users/horleyleitaomonteiro/projetos/Person/C#/ApiCatalogo/bin/Debug/net8.0/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+/Users/horleyleitaomonteiro/projetos/Person/C#/ApiCatalogo/bin/Debug/net8.0/Newtonsoft.Json.dll
+/Users/horleyleitaomonteiro/projetos/Person/C#/ApiCatalogo/bin/Debug/net8.0/Newtonsoft.Json.Bson.dll

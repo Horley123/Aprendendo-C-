@@ -1,9 +1,12 @@
 
 using ApiCatalogo.DTOs;
 using ApiCatalogo.Models;
+using ApiCatalogo.Pagination;
 using ApiCatalogo.Repositories;
 using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 
 namespace ApiCatalogo.Controllers
@@ -34,6 +37,29 @@ namespace ApiCatalogo.Controllers
             {
                 return NotFound();
             }
+            var produtosDto = _mapper.Map<IEnumerable<ProdutoDTO>>(produtos);
+            return Ok(produtosDto);
+        }
+        [HttpGet("pagination")]
+        public ActionResult<IEnumerable<ProdutoDTO>> Get([FromQuery] ProdutosParameters produtosParameters)
+        {
+            var produtos = _uof.ProdutoRepository.GetProdutos(produtosParameters);
+
+
+            var metadata = new
+            {
+                produtos.TotalCount,
+                produtos.PageSize,
+                produtos.CurrentPage,
+                produtos.TotalPages,
+                produtos.HasNext,
+                produtos.HasPrevious
+
+            };
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
+
             var produtosDto = _mapper.Map<IEnumerable<ProdutoDTO>>(produtos);
             return Ok(produtosDto);
         }
@@ -80,6 +106,36 @@ namespace ApiCatalogo.Controllers
             return new CreatedAtRouteResult("ObeterProduto", new { id = novoProdutoDto.ProdutoId }, novoProdutoDto);
         }
 
+        [HttpPatch("{id}/UpdatePartial")]
+        public ActionResult<ProdutoDTORequest> Patch(int id, JsonPatchDocument<ProdutoDTOResponse> patchProdutoDTO)
+        {
+            if (patchProdutoDTO is null || id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var produto = _uof.ProdutoRepository.Get(c => c.ProdutoId == id);
+
+            if (produto is null)
+            {
+                return NotFound();
+            }
+
+            var produtoDtoUpdate = _mapper.Map<ProdutoDTOResponse>(produto);
+
+            patchProdutoDTO.ApplyTo(produtoDtoUpdate, ModelState);
+
+            if (!ModelState.IsValid || !TryValidateModel(produtoDtoUpdate))
+            {
+                return BadRequest(ModelState);
+            }
+
+            _mapper.Map(produtoDtoUpdate, produto);
+            _uof.ProdutoRepository.Update(produto);
+
+            return Ok(_mapper.Map<ProdutoDTOResponse>(produto));
+
+        }
         [HttpPut("{id:int}")]
         public ActionResult<ProdutoDTO> Put(int id, ProdutoDTO produtoDto)
         {
